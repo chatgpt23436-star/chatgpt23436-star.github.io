@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>PetRide</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+</head>
+<body>
+
+  <div id="main-app">
+    <h1>PetRide - Taxi para Perros <div id="perrito-avatar">🐶</div></h1>
+    <form id="taxiForm">
+      <label>Nombre del dueño:</label><input type="text" id="nombre" required>
+      <label>Teléfono:</label><input type="tel" id="telefono" required>
+      <label>Correo:</label><input type="email" id="correo" required>
+      <label>Nombre del perro:</label><input type="text" id="nombre_perro" required>
+      <label>Tamaño del perro:</label><select id="tamano" required><option value="chico">Chico (+$50)</option><option value="mediano">Mediano (+$100)</option><option value="grande">Grande (+$150)</option></select>
+      <label>Temperamento:</label><select id="temperamento" required><option value="tranquilo">Tranquilo</option><option value="agresivo">Agresivo</option></select>
+      <label>Punto de partida:</label><input type="text" id="origen" autocomplete="off" required><ul id="sugerenciasOrigen" class="sugerencias"></ul>
+      <label>Destino:</label><input type="text" id="destino" autocomplete="off" required><ul id="sugerenciasDestino" class="sugerencias"></ul>
+      <label>Método de pago:</label><select id="metodo_pago" required><option value="efectivo">Efectivo</option><option value="paypal">PayPal</option></select>
+      <button type="button" onclick="calcularRuta()">Calcular ruta</button><button type="button" onclick="guardarViaje()">Guardar viaje</button>
+    </form>
+    <div class="seccion-video">
+      <h2>¿Cómo funciona PetRide?</h2><video controls width="100%"><source src="video.mp4" type="video/mp4"></video>
+    </div>
+    <div id="map"></div>
+    <div id="resultado"></div>
+    <div class="swiper-container">
+      <h2>Nuestros Clientes Felices</h2>
+      <div class="swiper-wrapper">
+        <div class="swiper-slide"><img src="https://placedog.net/600/400?id=1" alt="Perro en coche 1"></div>
+        <div class="swiper-slide"><img src="https://placedog.net/600/400?id=2" alt="Perro en coche 2"></div>
+        <div class="swiper-slide"><img src="https://placedog.net/600/400?id=3" alt="Perro en coche 3"></div>
+        <div class="swiper-slide"><img src="https://placedog.net/600/400?id=4" alt="Perro en coche 4"></div>
+        <div class="swiper-slide"><img src="https://placedog.net/600/400?id=5" alt="Perro en coche 5"></div>
+        <div class="swiper-slide"><img src="https://placedog.net/600/400?id=6" alt="Perro en coche 6"></div>
+        <div class="swiper-slide"><img src="https://placedog.net/600/400?id=7" alt="Perro en coche 7"></div>
+        <div class="swiper-slide"><img src="https://placedog.net/600/400?id=8" alt="Perro en coche 8"></div>
+      </div>
+      <div class="swiper-pagination"></div><div class="swiper-button-next"></div><div class="swiper-button-prev"></div>
+    </div>
+    <h2>📋 Viajes Guardados</h2>
+    <table id="tablaViajes">
+      <thead><tr><th>Dueño</th><th>Teléfono</th><th>Perro</th><th>Tamaño</th><th>Origen</th><th>Destino</th><th>Costo</th><th>Pago</th></tr></thead>
+      <tbody></tbody>
+    </table>
+    <div id="paypal-button-container" style="margin-top:20px;"></div>
+  </div>
+
+  <div id="login-modal" class="modal-overlay">
+    <div class="modal-content login-box">
+      <h2>Inicia Sesión en PetRide 🐾</h2>
+      <input type="text" id="username" placeholder="Nombre de usuario" required>
+      <input type="password" id="password" placeholder="Contraseña" required>
+      <button id="login-button">Entrar</button>
+    </div>
+  </div>
+
+  <div id="video-modal" class="modal-overlay">
+    <div class="modal-content video-box">
+      <span id="close-video-button" class="close-button">&times;</span>
+      <video id="welcome-video" width="100%" controls>
+          <source src="welcomevideo.mp4" type="video/mp4">
+      </video>
+    </div>
+  </div>
+  
+  <div id="welcome-message-modal" class="modal-overlay">
+    <div class="modal-content welcome-box">
+       <span id="close-welcome-button" class="close-button">&times;</span>
+       <h2>¡Que tengas un excelente día! ☀️</h2>
+       <p>Gracias por contactar a <strong>PetRide</strong>. Estamos listos para llevar a tu mejor amigo a su destino. 🐶❤️🚕</p>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.min.js"></script>
+  <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=MXN"></script>
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

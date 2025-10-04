@@ -1,0 +1,160 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&display=swap');
+
+:root {
+  --primary-color: #00C9A7;
+  --secondary-color: #C4FCEF;
+  --accent-color: #FFD400;
+  --text-color: #343A40;
+  --background-color: #F8F9FA;
+  --card-background: #FFFFFF;
+  --box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+body {
+  font-family: 'Nunito', sans-serif;
+  margin: 0;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
+/* --- ESTILOS PARA LOS POP-UPS (MODALES) --- */
+.modal-overlay {
+  display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background-color: rgba(0, 0, 0, 0.7); z-index: 9998;
+  justify-content: center; align-items: center;
+}
+.modal-content {
+  background-color: var(--card-background); padding: 40px; border-radius: 20px; 
+  box-shadow: var(--box-shadow); animation: animar-popup 0.5s;
+}
+.login-box {
+  width: 90%; max-width: 400px; text-align: center; border-top: 5px solid var(--primary-color);
+}
+.login-box h2 { 
+  color: var(--text-color); font-weight: 800; margin-bottom: 25px; 
+}
+.login-box input { 
+  width: 100%; padding: 15px; margin-bottom: 15px; border: 1px solid #ddd;
+  border-radius: 10px; box-sizing: border-box; background-color: #f9f9f9; font-family: 'Nunito', sans-serif;
+}
+.login-box input:focus {
+  outline: none; border-color: var(--primary-color);
+  box-shadow: 0 0 0 4px var(--secondary-color);
+}
+.login-box button { 
+  width: 100%; padding: 15px; border: none; border-radius: 10px; cursor: pointer;
+  background-color: var(--primary-color); color: white; font-size: 18px; font-weight: 700;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+.login-box button:hover {
+  background-color: #00a286; transform: scale(1.02);
+}
+.video-box {
+  position: relative;
+  width: 90%;
+  max-width: 800px;
+  padding: 10px;
+}
+.close-button {
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  background-color: var(--primary-color);
+  color: white;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  font-size: 28px;
+  line-height: 35px;
+  text-align: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: transform 0.2s;
+}
+.close-button:hover {
+  transform: scale(1.1);
+}
+.welcome-box {
+  position: relative;
+  width: 90%;
+  max-width: 500px;
+  text-align: center;
+  padding: 30px;
+  border-top: 5px solid var(--accent-color);
+}
+.welcome-box h2 {
+  color: var(--primary-color);
+  margin-bottom: 15px;
+}
+.welcome-box p {
+  font-size: 1.1em;
+  line-height: 1.6;
+}
+
+/* --- ESTILOS DE LA APLICACIÓN PRINCIPAL --- */
+#main-app {
+  display: none;
+  padding: 20px;
+}
+h1, h2 {
+  text-align: center; font-weight: 800; color: var(--text-color);
+}
+h1 {
+  font-size: 2.8em; margin-bottom: 30px; display: flex; align-items: center; justify-content: center;
+}
+#perrito-avatar {
+  font-size: 45px; margin-left: 15px; animation: bounce 2s infinite ease-in-out;
+}
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-20px); } 60% { transform: translateY(-10px); }
+}
+@keyframes animar-popup {
+  from {transform: scale(0.7); opacity: 0;}
+  to {transform: scale(1); opacity: 1;}
+}
+form, .seccion-video, #resultado, table {
+  background: var(--card-background); padding: 30px; border-radius: 20px; 
+  margin: 30px auto; box-shadow: var(--box-shadow); max-width: 700px;
+}
+label {
+  display: block; margin-top: 15px; font-weight: 700; margin-bottom: 8px;
+}
+input, select {
+  width: 100%; padding: 12px; margin-top: 5px; border: 1px solid #ddd; border-radius: 10px; 
+  box-sizing: border-box; background-color: #f9f9f9; font-family: 'Nunito', sans-serif;
+}
+input:focus, select:focus {
+  outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 4px var(--secondary-color);
+}
+form button {
+  margin-top: 20px; padding: 15px 25px; border: none; border-radius: 10px; cursor: pointer;
+  background-color: var(--accent-color); color: var(--text-color); font-size: 16px; font-weight: 700;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+form button:hover {
+  background-color: #e6be00; transform: scale(1.03);
+}
+#map {
+  height: 450px; border-radius: 20px; margin: 30px auto; 
+  box-shadow: var(--box-shadow); max-width: 900px;
+}
+table {
+  width: 100%; border-collapse: collapse; overflow: hidden;
+}
+th, td {
+  padding: 16px; text-align: left; border-bottom: 1px solid #eee;
+}
+thead th {
+  background-color: var(--primary-color); color: white;
+}
+tbody tr:hover {
+  background-color: var(--secondary-color);
+}
+.swiper-container {
+  max-width: 900px; margin: 30px auto; padding: 20px 0;
+}
+.swiper-slide { border-radius: 20px; overflow: hidden; }
+.swiper-slide img { width: 100%; height: 250px; object-fit: cover; }
+.swiper-button-next, .swiper-button-prev { color: var(--primary-color); }
+.swiper-pagination-bullet-active { background: var(--primary-color); }
