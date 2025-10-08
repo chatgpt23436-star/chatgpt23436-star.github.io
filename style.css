@@ -1,159 +1,225 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Fredoka+One&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css');
 
 :root {
-  --primary-color: #00C9A7;
-  --secondary-color: #C4FCEF;
-  --accent-color: #FFD400;
-  --text-color: #343A40;
-  --background-color: #F8F9FA;
+  /* Paleta de colores principal (Light Mode) */
+  --primary-color: #007BFF;
+  --accent-color: #FF4081;
+  --text-color: #212529;
   --card-background: #FFFFFF;
-  --box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  --shadow-color: rgba(0, 123, 255, 0.15);
+
+  /* Colores para el Login (Dark Mode) */
+  --dark-bg: #1A1A2E;
+  --neon-glow-color: var(--accent-color);
 }
+
+/* Scrollbar personalizado */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #e9ecef; }
+::-webkit-scrollbar-thumb { background: var(--primary-color); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #0056b3; }
 
 body {
   font-family: 'Nunito', sans-serif;
   margin: 0;
-  background-color: var(--background-color);
+  background-color: #F8F9FA; /* Color de fondo estático inicial */
   color: var(--text-color);
-  line-height: 1.6;
+  line-height: 1.7;
+}
+
+/* --- NUEVO FONDO ANIMADO PARA LA PÁGINA PRINCIPAL --- */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  z-index: -1;
+  background: linear-gradient(-45deg, #e0e7ff, #c4fcef, #fdf6ec, #e0e7ff);
+  background-size: 400% 400%;
+  animation: gradient-animation 25s ease infinite;
+  opacity: 0; /* Inicia oculto */
+  transition: opacity 1.5s ease; /* Transición suave */
+}
+/* Cuando la app es visible, el fondo aparece */
+body.app-visible::before {
+  opacity: 1;
 }
 
 /* --- ESTILOS PARA LOS POP-UPS (MODALES) --- */
 .modal-overlay {
-  display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-  background-color: rgba(0, 0, 0, 0.7); z-index: 9998;
-  justify-content: center; align-items: center;
+  display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+  z-index: 9998; justify-content: center; align-items: center;
+  background-color: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(5px);
 }
 .modal-content {
   background-color: var(--card-background); padding: 40px; border-radius: 20px; 
-  box-shadow: var(--box-shadow); animation: animar-popup 0.5s;
-}
-.login-box {
-  width: 90%; max-width: 400px; text-align: center; border-top: 5px solid var(--primary-color);
-}
-.login-box h2 { 
-  color: var(--text-color); font-weight: 800; margin-bottom: 25px; 
-}
-.login-box input { 
-  width: 100%; padding: 15px; margin-bottom: 15px; border: 1px solid #ddd;
-  border-radius: 10px; box-sizing: border-box; background-color: #f9f9f9; font-family: 'Nunito', sans-serif;
-}
-.login-box input:focus {
-  outline: none; border-color: var(--primary-color);
-  box-shadow: 0 0 0 4px var(--secondary-color);
-}
-.login-box button { 
-  width: 100%; padding: 15px; border: none; border-radius: 10px; cursor: pointer;
-  background-color: var(--primary-color); color: white; font-size: 18px; font-weight: 700;
-  transition: transform 0.2s ease, background-color 0.2s ease;
-}
-.login-box button:hover {
-  background-color: #00a286; transform: scale(1.02);
-}
-.video-box {
-  position: relative;
-  width: 90%;
-  max-width: 800px;
-  padding: 10px;
-}
-.close-button {
-  position: absolute;
-  top: -15px;
-  right: -15px;
-  background-color: var(--primary-color);
-  color: white;
-  border-radius: 50%;
-  width: 35px;
-  height: 35px;
-  font-size: 28px;
-  line-height: 35px;
-  text-align: center;
-  cursor: pointer;
-  z-index: 10;
-  transition: transform 0.2s;
-}
-.close-button:hover {
-  transform: scale(1.1);
-}
-.welcome-box {
-  position: relative;
-  width: 90%;
-  max-width: 500px;
-  text-align: center;
-  padding: 30px;
-  border-top: 5px solid var(--accent-color);
-}
-.welcome-box h2 {
-  color: var(--primary-color);
-  margin-bottom: 15px;
-}
-.welcome-box p {
-  font-size: 1.1em;
-  line-height: 1.6;
-}
-
-/* --- ESTILOS DE LA APLICACIÓN PRINCIPAL --- */
-#main-app {
-  display: none;
-  padding: 20px;
-}
-h1, h2 {
-  text-align: center; font-weight: 800; color: var(--text-color);
-}
-h1 {
-  font-size: 2.8em; margin-bottom: 30px; display: flex; align-items: center; justify-content: center;
-}
-#perrito-avatar {
-  font-size: 45px; margin-left: 15px; animation: bounce 2s infinite ease-in-out;
-}
-@keyframes bounce {
-  0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-20px); } 60% { transform: translateY(-10px); }
+  box-shadow: 0 15px 35px rgba(0,0,0,0.2); animation: animar-popup 0.5s;
 }
 @keyframes animar-popup {
   from {transform: scale(0.7); opacity: 0;}
   to {transform: scale(1); opacity: 1;}
 }
-form, .seccion-video, #resultado, table {
-  background: var(--card-background); padding: 30px; border-radius: 20px; 
-  margin: 30px auto; box-shadow: var(--box-shadow); max-width: 700px;
+
+/* Fondo de gradiente animado para el Login */
+.animated-background {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  z-index: 0;
+  background: linear-gradient(45deg, #1A1A2E, #283747, #4A90E2, #1A1A2E);
+  background-size: 400% 400%;
+  animation: gradient-animation 15s ease infinite;
 }
-label {
-  display: block; margin-top: 15px; font-weight: 700; margin-bottom: 8px;
+@keyframes gradient-animation {
+  0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; }
 }
-input, select {
-  width: 100%; padding: 12px; margin-top: 5px; border: 1px solid #ddd; border-radius: 10px; 
-  box-sizing: border-box; background-color: #f9f9f9; font-family: 'Nunito', sans-serif;
+
+/* Efecto Vidrio 'Crystal' para el Login */
+.login-box {
+  width: 90%; max-width: 380px; text-align: center;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+  border: 1.5px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  position: relative;
+  z-index: 1;
+  padding: 50px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3), inset 0 1px 1px rgba(255,255,255,0.2);
 }
+.login-box h2 { 
+  font-family: 'Fredoka One', cursive; color: #fff; font-size: 2.5em; 
+  text-shadow: 0 0 10px rgba(255,255,255,0.7), 0 0 20px rgba(255, 64, 129, 0.5);
+  margin-bottom: 30px; 
+}
+
+/* Pop-up de Video con Fondo Animado */
+.video-box {
+  position: relative;
+  width: 90%;
+  max-width: 800px;
+  padding: 10px;
+  border-radius: 15px;
+  overflow: hidden;
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background-size: 400% 400%;
+  animation: gradient-animation 15s ease infinite;
+}
+.video-box video {
+  display: block;
+  border-radius: 8px;
+}
+.close-button {
+  position: absolute; top: -15px; right: -15px; background: #333; color: white;
+  border-radius: 50%; width: 35px; height: 35px; font-size: 20px; line-height: 35px;
+  text-align: center; cursor: pointer; z-index: 10; transition: transform 0.3s, background-color 0.3s;
+}
+.close-button:hover { transform: scale(1.1) rotate(90deg); background: var(--accent-color); }
+
+/* --- CORRECCIÓN: Pop-up de Mensaje de Bienvenida Mejorado --- */
+.welcome-box {
+  position: relative;
+  width: 90%;
+  max-width: 500px;
+  text-align: center;
+  padding: 40px;
+  border: none;
+  color: white;
+  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+.welcome-box h2 {
+  font-family: 'Fredoka One', cursive;
+  color: white;
+  text-shadow: 1px 1px 5px rgba(0,0,0,0.3);
+  margin-bottom: 15px;
+}
+.welcome-box p {
+  font-size: 1.1em;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+.welcome-box .close-button {
+  background: rgba(0,0,0,0.3);
+}
+
+/* --- ESTILOS DE LA APLICACIÓN PRINCIPAL --- */
+#main-app { display: none; padding: 20px; position: relative; z-index: 1; background: transparent; }
+h1, h2 { font-family: 'Fredoka One', cursive; text-align: center; }
+h1 {
+  font-size: 3.5em; color: var(--primary-color);
+  text-shadow: 2px 2px 0px rgba(0,0,0,0.05);
+  display: flex; align-items: center; justify-content: center;
+}
+h2 i { margin-right: 10px; color: var(--primary-color); }
+#perrito-avatar { font-size: 50px; margin-left: 15px; animation: bounce 2s infinite ease-in-out; }
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-20px); } 60% { transform: translateY(-10px); }
+}
+
+/* Movimiento Sutil de las tarjetas */
+form, .seccion-video, #resultado, table, .swiper-container, div.animated-card {
+  background: var(--card-background); padding: 35px; border-radius: 20px; 
+  margin: 40px auto; box-shadow: 0 10px 30px var(--shadow-color); max-width: 700px;
+  border-top: 4px solid var(--primary-color);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+form:hover, .seccion-video:hover, #resultado:hover, table:hover, .swiper-container:hover, div.animated-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 18px 40px var(--shadow-color);
+}
+/* Campos de formulario con etiquetas flotantes */
+.form-group { position: relative; margin-top: 25px; }
+.login-box .form-group { margin-bottom: 30px; }
+.form-group input, .form-group select {
+  width: 100%; padding: 15px; border-radius: 10px; box-sizing: border-box; 
+  font-family: 'Nunito', sans-serif; font-size: 1em; border: 1px solid #ccc;
+  background-color: #fff;
+}
+.form-group label {
+  position: absolute; top: 16px; left: 15px; color: #999;
+  pointer-events: none; transition: all 0.2s ease;
+  display: flex; align-items: center;
+}
+.login-box .form-group label { color: rgba(255, 255, 255, 0.7); }
+.form-group input:focus + label, .form-group input:not(:placeholder-shown) + label {
+  top: -10px; left: 10px; font-size: 0.8em;
+  background-color: var(--card-background);
+  padding: 0 5px;
+  color: var(--primary-color);
+}
+.login-box .form-group input:focus + label, .login-box .form-group input:not(:placeholder-shown) + label {
+  background-color: #1f1f3a; color: var(--accent-color);
+}
+.form-group select ~ .static-label {
+    position: static; color: var(--primary-color); font-weight: 700; display: flex; align-items: center; margin-bottom: 8px; font-size: 1.1em;
+}
+
+label i { margin-right: 10px; width: 20px; text-align: center; }
+.form-row { display: flex; gap: 20px; }
+.form-row .form-group { flex: 1; }
+
 input:focus, select:focus {
-  outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 4px var(--secondary-color);
+  outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 4px rgba(74, 144, 226, 0.2);
 }
-form button {
-  margin-top: 20px; padding: 15px 25px; border: none; border-radius: 10px; cursor: pointer;
-  background-color: var(--accent-color); color: var(--text-color); font-size: 16px; font-weight: 700;
-  transition: transform 0.2s ease, background-color 0.2s ease;
+
+.login-box button, form button {
+  width: 100%; padding: 15px; margin-top: 15px; border: none; border-radius: 10px; cursor: pointer;
+  background: var(--accent-color);
+  color: white; font-size: 18px; font-weight: 700;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(255, 64, 129, 0.4);
 }
-form button:hover {
-  background-color: #e6be00; transform: scale(1.03);
+.login-box button:hover, form button:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(255, 64, 129, 0.6);
 }
-#map {
-  height: 450px; border-radius: 20px; margin: 30px auto; 
-  box-shadow: var(--box-shadow); max-width: 900px;
-}
-table {
-  width: 100%; border-collapse: collapse; overflow: hidden;
-}
-th, td {
-  padding: 16px; text-align: left; border-bottom: 1px solid #eee;
-}
-thead th {
-  background-color: var(--primary-color); color: white;
-}
-tbody tr:hover {
-  background-color: var(--secondary-color);
-}
-.swiper-container {
-  max-width: 900px; margin: 30px auto; padding: 20px 0;
-}
+
+#map { height: 450px; border-radius: 20px; max-width: 900px; }
+table { width: 100%; border-collapse: collapse; overflow: hidden; }
+thead th { background-color: var(--primary-color); color: white; }
+tbody tr:hover { background-color: rgba(74, 144, 226, 0.1); }
+th, td { padding: 16px; text-align: left; border-bottom: 1px solid #eee; }
+.swiper-container { max-width: 900px; margin: 30px auto; padding: 20px 0; }
 .swiper-slide { border-radius: 20px; overflow: hidden; }
 .swiper-slide img { width: 100%; height: 250px; object-fit: cover; }
 .swiper-button-next, .swiper-button-prev { color: var(--primary-color); }

@@ -29,6 +29,10 @@ document.addEventListener('DOMContentLoaded', function() {
     videoModal.style.display = 'none';
     welcomeVideo.pause();
     mainApp.style.display = 'block';
+    
+    // AÑADIMOS UNA CLASE AL BODY PARA ACTIVAR EL FONDO ANIMADO
+    document.body.classList.add('app-visible');
+    
     initializeApp();
     
     setTimeout(() => {

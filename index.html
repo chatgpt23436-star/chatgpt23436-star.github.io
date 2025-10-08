@@ -2,70 +2,66 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>PetRide</title>
+  <title>PetRide - Deluxe</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
   <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-FD9QQ7B0DN"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-
     gtag('config', 'G-FD9QQ7B0DN');
   </script>
-
 </head>
 <body>
 
   <div id="main-app">
-    <h1>PetRide - Taxi para Perros <div id="perrito-avatar">🐶</div></h1>
-    <form id="taxiForm">
-      <label>Nombre del dueño:</label><input type="text" id="nombre" required>
-      <label>Teléfono:</label><input type="tel" id="telefono" required>
-      <label>Correo:</label><input type="email" id="correo" required>
-      <label>Nombre del perro:</label><input type="text" id="nombre_perro" required>
-      <label>Tamaño del perro:</label><select id="tamano" required><option value="chico">Chico (+$50)</option><option value="mediano">Mediano (+$100)</option><option value="grande">Grande (+$150)</option></select>
-      <label>Temperamento:</label><select id="temperamento" required><option value="tranquilo">Tranquilo</option><option value="agresivo">Agresivo</option></select>
-      <label>Punto de partida:</label><input type="text" id="origen" autocomplete="off" required><ul id="sugerenciasOrigen" class="sugerencias"></ul>
-      <label>Destino:</label><input type="text" id="destino" autocomplete="off" required><ul id="sugerenciasDestino" class="sugerencias"></ul>
-      <label>Método de pago:</label><select id="metodo_pago" required><option value="efectivo">Efectivo</option><option value="paypal">PayPal</option></select>
+    <h1><i class="fa-solid fa-paw"></i> PetRide <div id="perrito-avatar">🐶</div></h1>
+    <form id="taxiForm" class="animated-card">
+      <div class="form-row">
+        <div class="form-group"><input type="text" id="nombre" required placeholder=" "><label for="nombre"><i class="fa-solid fa-user-shield"></i> Nombre del dueño</label></div>
+        <div class="form-group"><input type="tel" id="telefono" required placeholder=" "><label for="telefono"><i class="fa-solid fa-phone"></i> Teléfono</label></div>
+      </div>
+      <div class="form-group"><input type="email" id="correo" required placeholder=" "><label for="correo"><i class="fa-solid fa-envelope"></i> Correo</label></div>
+      <div class="form-row">
+        <div class="form-group"><input type="text" id="nombre_perro" required placeholder=" "><label for="nombre_perro"><i class="fa-solid fa-dog"></i> Nombre del perro</label></div>
+        <div class="form-group"><select id="tamano" required><option value="chico">Chico (+$50)</option><option value="mediano">Mediano (+$100)</option><option value="grande">Grande (+$150)</option></select><label class="static-label"><i class="fa-solid fa-ruler-combined"></i> Tamaño</label></div>
+      </div>
+      <div class="form-group"><select id="temperamento" required><option value="tranquilo">Tranquilo</option><option value="agresivo">Agresivo</option></select><label class="static-label"><i class="fa-solid fa-face-smile"></i> Temperamento</label></div>
+      <div class="form-group"><input type="text" id="origen" autocomplete="off" required placeholder=" "><label for="origen"><i class="fa-solid fa-map-pin"></i> Punto de partida</label><ul id="sugerenciasOrigen" class="sugerencias"></ul></div>
+      <div class="form-group"><input type="text" id="destino" autocomplete="off" required placeholder=" "><label for="destino"><i class="fa-solid fa-flag-checkered"></i> Destino</label><ul id="sugerenciasDestino" class="sugerencias"></ul></div>
+      <div class="form-group"><select id="metodo_pago" required><option value="efectivo">Efectivo</option><option value="paypal">PayPal</option></select><label class="static-label"><i class="fa-solid fa-credit-card"></i> Método de pago</label></div>
       <button type="button" onclick="calcularRuta()">Calcular ruta</button><button type="button" onclick="guardarViaje()">Guardar viaje</button>
     </form>
-    <div class="seccion-video">
-      <h2>¿Cómo funciona PetRide?</h2><video controls width="100%"><source src="video.mp4" type="video/mp4"></video>
+    <div class="seccion-video animated-card">
+      <h2><i class="fa-solid fa-circle-play"></i> ¿Cómo funciona PetRide?</h2><video controls width="100%"><source src="video.mp4" type="video/mp4"></video>
     </div>
-    <div id="map"></div>
-    <div id="resultado"></div>
-    <div class="swiper-container">
-      <h2>Nuestros Clientes Felices</h2>
+    <div id="map" class="animated-card"></div>
+    <div id="resultado" class="animated-card"></div>
+    <div class="swiper-container animated-card">
+      <h2><i class="fa-solid fa-camera-retro"></i> Nuestros Clientes Felices</h2>
       <div class="swiper-wrapper">
-        <div class="swiper-slide"><img src="https://placedog.net/600/400?id=1" alt="Perro en coche 1"></div>
-        <div class="swiper-slide"><img src="https://placedog.net/600/400?id=2" alt="Perro en coche 2"></div>
-        <div class="swiper-slide"><img src="https://placedog.net/600/400?id=3" alt="Perro en coche 3"></div>
-        <div class="swiper-slide"><img src="https://placedog.net/600/400?id=4" alt="Perro en coche 4"></div>
-        <div class="swiper-slide"><img src="https://placedog.net/600/400?id=5" alt="Perro en coche 5"></div>
-        <div class="swiper-slide"><img src="https://placedog.net/600/400?id=6" alt="Perro en coche 6"></div>
-        <div class="swiper-slide"><img src="https://placedog.net/600/400?id=7" alt="Perro en coche 7"></div>
-        <div class="swiper-slide"><img src="https://placedog.net/600/400?id=8" alt="Perro en coche 8"></div>
+        <div class="swiper-slide"><img src="https://placedog.net/600/400?id=1" alt="Perro en coche 1"></div><div class="swiper-slide"><img src="https://placedog.net/600/400?id=2" alt="Perro en coche 2"></div><div class="swiper-slide"><img src="https://placedog.net/600/400?id=3" alt="Perro en coche 3"></div><div class="swiper-slide"><img src="https://placedog.net/600/400?id=4" alt="Perro en coche 4"></div><div class="swiper-slide"><img src="https://placedog.net/600/400?id=5" alt="Perro en coche 5"></div><div class="swiper-slide"><img src="https://placedog.net/600/400?id=6" alt="Perro en coche 6"></div><div class="swiper-slide"><img src="https://placedog.net/600/400?id=7" alt="Perro en coche 7"></div><div class="swiper-slide"><img src="https://placedog.net/600/400?id=8" alt="Perro en coche 8"></div>
       </div>
       <div class="swiper-pagination"></div><div class="swiper-button-next"></div><div class="swiper-button-prev"></div>
     </div>
-    <h2>📋 Viajes Guardados</h2>
-    <table id="tablaViajes">
-      <thead><tr><th>Dueño</th><th>Teléfono</th><th>Perro</th><th>Tamaño</th><th>Origen</th><th>Destino</th><th>Costo</th><th>Pago</th></tr></thead>
-      <tbody></tbody>
-    </table>
-    <div id="paypal-button-container" style="margin-top:20px;"></div>
+    <div class="animated-card">
+      <h2><i class="fa-solid fa-clipboard-list"></i> Viajes Guardados</h2>
+      <table id="tablaViajes"><thead><tr><th>Dueño</th><th>Teléfono</th><th>Perro</th><th>Tamaño</th><th>Origen</th><th>Destino</th><th>Costo</th><th>Pago</th></tr></thead><tbody></tbody></table>
+    </div>
+    <div id="paypal-button-container" class="animated-card" style="max-width: 700px; margin: 40px auto;"></div>
   </div>
 
   <div id="login-modal" class="modal-overlay">
+    <div class="animated-background"></div>
     <div class="modal-content login-box">
-      <h2>Inicia Sesión en PetRide 🐾</h2>
-      <input type="text" id="username" placeholder="Nombre de usuario" required>
-      <input type="password" id="password" placeholder="Contraseña" required>
+      <h2>Inicia Sesión 🐾</h2>
+      <div class="form-group"><input type="text" id="username" placeholder=" " required><label for="username">Usuario</label></div>
+      <div class="form-group"><input type="password" id="password" placeholder=" " required><label for="password">Contraseña</label></div>
       <button id="login-button">Entrar</button>
     </div>
   </div>
@@ -73,9 +69,7 @@
   <div id="video-modal" class="modal-overlay">
     <div class="modal-content video-box">
       <span id="close-video-button" class="close-button">&times;</span>
-      <video id="welcome-video" width="100%" controls>
-          <source src="welcomevideo.mp4" type="video/mp4">
-      </video>
+      <video id="welcome-video" width="100%" controls><source src="welcomevideo.mp4" type="video/mp4"></video>
     </div>
   </div>
   
