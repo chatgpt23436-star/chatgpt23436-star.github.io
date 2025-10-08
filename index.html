@@ -35,13 +35,16 @@
       <div class="form-group"><input type="text" id="origen" autocomplete="off" required placeholder=" "><label for="origen"><i class="fa-solid fa-map-pin"></i> Punto de partida</label><ul id="sugerenciasOrigen" class="sugerencias"></ul></div>
       <div class="form-group"><input type="text" id="destino" autocomplete="off" required placeholder=" "><label for="destino"><i class="fa-solid fa-flag-checkered"></i> Destino</label><ul id="sugerenciasDestino" class="sugerencias"></ul></div>
       <div class="form-group"><select id="metodo_pago" required><option value="efectivo">Efectivo</option><option value="paypal">PayPal</option></select><label class="static-label"><i class="fa-solid fa-credit-card"></i> Método de pago</label></div>
-      <button type="button" onclick="calcularRuta()">Calcular ruta</button><button type="button" onclick="guardarViaje()">Guardar viaje</button>
+      <button type="button" id="calculate-button">Calcular ruta</button>
+      <button type="button" id="save-button">Guardar viaje</button>
     </form>
+
+    <div id="map" class="animated-card"></div>
+    <div id="resultado" class="animated-card"></div>
     <div class="seccion-video animated-card">
       <h2><i class="fa-solid fa-circle-play"></i> ¿Cómo funciona PetRide?</h2><video controls width="100%"><source src="video.mp4" type="video/mp4"></video>
     </div>
-    <div id="map" class="animated-card"></div>
-    <div id="resultado" class="animated-card"></div>
+
     <div class="swiper-container animated-card">
       <h2><i class="fa-solid fa-camera-retro"></i> Nuestros Clientes Felices</h2>
       <div class="swiper-wrapper">

@@ -2,11 +2,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // --- ELEMENTOS DEL DOM ---
   const mainApp = document.getElementById('main-app');
-  // Modales
   const loginModal = document.getElementById('login-modal');
   const videoModal = document.getElementById('video-modal');
   const welcomeMessageModal = document.getElementById('welcome-message-modal');
-  // Botones y Controles
   const loginButton = document.getElementById('login-button');
   const usernameInput = document.getElementById('username');
   const passwordInput = document.getElementById('password');
@@ -29,10 +27,6 @@ document.addEventListener('DOMContentLoaded', function() {
     videoModal.style.display = 'none';
     welcomeVideo.pause();
     mainApp.style.display = 'block';
-    
-    // AÑADIMOS UNA CLASE AL BODY PARA ACTIVAR EL FONDO ANIMADO
-    document.body.classList.add('app-visible');
-    
     initializeApp();
     
     setTimeout(() => {
@@ -50,18 +44,31 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // --- FUNCIÓN QUE INICIALIZA TODA LA APP ---
 function initializeApp() {
+  // --- SECCIÓN DE INICIALIZACIÓN ---
   let map = L.map('map').setView([19.4326, -99.1332], 12);
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+  
   var swiper = new Swiper('.swiper-container', {
     slidesPerView: 1, spaceBetween: 30, loop: true,
     pagination: { el: '.swiper-pagination', clickable: true, },
     navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev', },
     breakpoints: { 768: { slidesPerView: 2, spaceBetween: 20 } }
   });
+
   let controlRuta;
   let coordsOrigen, coordsDestino;
   let costoTotal = 0;
-  window.buscarDireccion = function(inputId, sugerenciasId, callback){
+
+  // --- CORRECCIÓN: Conectamos los botones desde aquí ---
+  const calculateButton = document.getElementById('calculate-button');
+  const saveButton = document.getElementById('save-button');
+
+  calculateButton.addEventListener('click', calcularRuta);
+  saveButton.addEventListener('click', guardarViaje);
+  // --- FIN DE LA CORRECCIÓN ---
+
+  // --- SECCIÓN DE FUNCIONES DE LA APP ---
+  function buscarDireccion(inputId, sugerenciasId, callback){
     let input = document.getElementById(inputId);
     let lista = document.getElementById(sugerenciasId);
     input.addEventListener('input', function(){
@@ -84,9 +91,8 @@ function initializeApp() {
         });
     });
   }
-  buscarDireccion('origen','sugerenciasOrigen', coords => coordsOrigen = coords);
-  buscarDireccion('destino','sugerenciasDestino', coords => coordsDestino = coords);
-  window.calcularRuta = function(){
+
+  function calcularRuta(){
     if(!coordsOrigen || !coordsDestino){ alert("Selecciona origen y destino"); return;}
     let tamano = document.getElementById("tamano").value;
     if(controlRuta) map.removeControl(controlRuta);
@@ -102,7 +108,8 @@ function initializeApp() {
         `<h3>Resultado del viaje</h3><p>Distancia: ${distanciaKm.toFixed(2)} km</p><p>Costo por distancia: $${costoKm.toFixed(2)}</p><p>Costo adicional: $${extra}</p><h4>Total a pagar: $${costoTotal.toFixed(2)}</h4>`;
     }).addTo(map);
   }
-  window.guardarViaje = function(){
+
+  function guardarViaje(){
     if(costoTotal === 0){ alert("Primero calcula la ruta"); return;}
     let metodo_pago = document.getElementById("metodo_pago").value;
     let viaje = {
@@ -118,6 +125,7 @@ function initializeApp() {
       alert("Pago en efectivo confirmado ✅");
     }
   }
+
   function mostrarViajes(){
     let viajes = JSON.parse(localStorage.getItem("viajes")) || [];
     let tbody = document.querySelector("#tablaViajes tbody");
@@ -127,6 +135,7 @@ function initializeApp() {
       tbody.innerHTML += fila;
     });
   }
+
   function mostrarBotonPayPal(){
     document.getElementById("paypal-button-container").innerHTML = "";
     paypal.Buttons({
@@ -141,5 +150,8 @@ function initializeApp() {
     }).render('#paypal-button-container');
   }
   
+  // --- SECCIÓN DE LLAMADAS INICIALES ---
+  buscarDireccion('origen','sugerenciasOrigen', coords => coordsOrigen = coords);
+  buscarDireccion('destino','sugerenciasDestino', coords => coordsDestino = coords);
   mostrarViajes();
 }
