@@ -40,7 +40,6 @@ body::before {
   opacity: 0; /* Inicia oculto */
   transition: opacity 1.5s ease; /* Transición suave */
 }
-/* Cuando la app es visible, el fondo aparece */
 body.app-visible::before {
   opacity: 1;
 }
@@ -76,60 +75,63 @@ body.app-visible::before {
 
 /* Efecto Vidrio 'Crystal' para el Login */
 .login-box {
-  width: 90%; max-width: 380px; text-align: center;
+  width: 90%; max-width: 420px; text-align: center;
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
   border: 1.5px solid rgba(255, 255, 255, 0.1);
   border-radius: 20px;
   position: relative;
   z-index: 1;
-  padding: 50px;
+  padding: 40px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.3), inset 0 1px 1px rgba(255,255,255,0.2);
 }
 .login-box h2 { 
-  font-family: 'Fredoka One', cursive; color: #fff; font-size: 2.5em; 
+  font-family: 'Fredoka One', cursive; color: #fff; font-size: 2.2em; 
   text-shadow: 0 0 10px rgba(255,255,255,0.7), 0 0 20px rgba(255, 64, 129, 0.5);
-  margin-bottom: 30px; 
+  margin-bottom: 25px; 
 }
 
-/* Pop-up de Video con Fondo Animado */
-.video-box {
-  position: relative;
-  width: 90%;
-  max-width: 800px;
-  padding: 10px;
-  border-radius: 15px;
-  overflow: hidden;
-  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+/* --- CAMBIO: Pop-up de Video con Fondo Tornasol --- */
+.video-box { 
+  position: relative; 
+  width: 90%; 
+  max-width: 800px; 
+  padding: 10px; /* Un poco de padding para el borde */
+  border-radius: 15px; 
+  overflow: hidden; 
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab); /* Colores tornasol */
   background-size: 400% 400%;
   animation: gradient-animation 15s ease infinite;
 }
-.video-box video {
+.video-box video { 
   display: block;
-  border-radius: 8px;
+  border-radius: 8px; /* Pequeño radio para que el fondo se vea alrededor */
 }
-.close-button {
-  position: absolute; top: -15px; right: -15px; background: #333; color: white;
-  border-radius: 50%; width: 35px; height: 35px; font-size: 20px; line-height: 35px;
-  text-align: center; cursor: pointer; z-index: 10; transition: transform 0.3s, background-color 0.3s;
+
+.close-button { 
+  position: absolute; top: 15px; right: 15px; background: rgba(0,0,0,0.5); color: white; 
+  border-radius: 50%; width: 35px; height: 35px; font-size: 20px; line-height: 35px; 
+  text-align: center; cursor: pointer; z-index: 10; transition: transform 0.3s, background-color 0.3s; 
 }
 .close-button:hover { transform: scale(1.1) rotate(90deg); background: var(--accent-color); }
 
-/* --- CORRECCIÓN: Pop-up de Mensaje de Bienvenida Mejorado --- */
-.welcome-box {
-  position: relative;
-  width: 90%;
-  max-width: 500px;
-  text-align: center;
-  padding: 40px;
-  border: none;
-  color: white;
-  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+/* --- CAMBIO: Pop-up de Mensaje de Bienvenida con Fondo Tornasol --- */
+.welcome-box { 
+  position: relative; 
+  width: 90%; 
+  max-width: 500px; 
+  text-align: center; 
+  padding: 40px; 
+  border: none; /* Quitamos el borde para que el fondo sea el protagonista */
+  color: white; /* Color de texto para que contraste con el fondo */
+  background: linear-gradient(135deg, #8A2BE2, #FF1493, #00BFFF, #ADFF2F); /* Colores vibrantes */
+  background-size: 400% 400%;
+  animation: gradient-animation 20s ease infinite;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3); 
 }
-.welcome-box h2 {
-  font-family: 'Fredoka One', cursive;
-  color: white;
+.welcome-box h2 { 
+  font-family: 'Fredoka One', cursive; 
+  color: white; /* Aseguramos que el título sea blanco */
   text-shadow: 1px 1px 5px rgba(0,0,0,0.3);
   margin-bottom: 15px;
 }
@@ -138,82 +140,52 @@ body.app-visible::before {
   line-height: 1.6;
   opacity: 0.9;
 }
+/* Ajustamos el botón de cierre para que se vea bien en el fondo tornasol */
 .welcome-box .close-button {
-  background: rgba(0,0,0,0.3);
+    background: rgba(0,0,0,0.3);
 }
+
+/* Estilos para el link de cambiar entre login y registro */
+.switch-form-link {
+  margin-top: 25px;
+  font-size: 0.9em;
+  color: rgba(255, 255, 255, 0.7);
+}
+.switch-form-link a {
+  color: #fff;
+  font-weight: bold;
+  text-decoration: none;
+  border-bottom: 1px solid var(--accent-color);
+  transition: color 0.3s;
+}
+.switch-form-link a:hover {
+  color: var(--accent-color);
+}
+
 
 /* --- ESTILOS DE LA APLICACIÓN PRINCIPAL --- */
 #main-app { display: none; padding: 20px; position: relative; z-index: 1; background: transparent; }
 h1, h2 { font-family: 'Fredoka One', cursive; text-align: center; }
-h1 {
-  font-size: 3.5em; color: var(--primary-color);
-  text-shadow: 2px 2px 0px rgba(0,0,0,0.05);
-  display: flex; align-items: center; justify-content: center;
-}
+h1 { font-size: 3.5em; color: var(--primary-color); text-shadow: 2px 2px 0px rgba(0,0,0,0.05); display: flex; align-items: center; justify-content: center; }
 h2 i { margin-right: 10px; color: var(--primary-color); }
 #perrito-avatar { font-size: 50px; margin-left: 15px; animation: bounce 2s infinite ease-in-out; }
-@keyframes bounce {
-  0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-20px); } 60% { transform: translateY(-10px); }
-}
-
-/* Movimiento Sutil de las tarjetas */
-form, .seccion-video, #resultado, table, .swiper-container, div.animated-card {
-  background: var(--card-background); padding: 35px; border-radius: 20px; 
-  margin: 40px auto; box-shadow: 0 10px 30px var(--shadow-color); max-width: 700px;
-  border-top: 4px solid var(--primary-color);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-form:hover, .seccion-video:hover, #resultado:hover, table:hover, .swiper-container:hover, div.animated-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 18px 40px var(--shadow-color);
-}
-/* Campos de formulario con etiquetas flotantes */
-.form-group { position: relative; margin-top: 25px; }
-.login-box .form-group { margin-bottom: 30px; }
-.form-group input, .form-group select {
-  width: 100%; padding: 15px; border-radius: 10px; box-sizing: border-box; 
-  font-family: 'Nunito', sans-serif; font-size: 1em; border: 1px solid #ccc;
-  background-color: #fff;
-}
-.form-group label {
-  position: absolute; top: 16px; left: 15px; color: #999;
-  pointer-events: none; transition: all 0.2s ease;
-  display: flex; align-items: center;
-}
+@keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-20px); } 60% { transform: translateY(-10px); } }
+form, .seccion-video, #resultado, table, .swiper-container, div.animated-card { background: var(--card-background); padding: 35px; border-radius: 20px; margin: 40px auto; box-shadow: 0 10px 30px var(--shadow-color); max-width: 700px; border-top: 4px solid var(--primary-color); transition: transform 0.3s ease, box-shadow 0.3s ease; }
+form:hover, .seccion-video:hover, #resultado:hover, table:hover, .swiper-container:hover, div.animated-card:hover { transform: translateY(-8px); box-shadow: 0 18px 40px var(--shadow-color); }
+.form-group { position: relative; margin-top: 20px; }
+.login-box .form-group { margin-bottom: 20px; }
+.form-group input, .form-group select { width: 100%; padding: 15px; border-radius: 10px; box-sizing: border-box; font-family: 'Nunito', sans-serif; font-size: 1em; border: 1px solid #ccc; background-color: #fff; }
+.form-group label { position: absolute; top: 16px; left: 15px; color: #999; pointer-events: none; transition: all 0.2s ease; display: flex; align-items: center; }
 .login-box .form-group label { color: rgba(255, 255, 255, 0.7); }
-.form-group input:focus + label, .form-group input:not(:placeholder-shown) + label {
-  top: -10px; left: 10px; font-size: 0.8em;
-  background-color: var(--card-background);
-  padding: 0 5px;
-  color: var(--primary-color);
-}
-.login-box .form-group input:focus + label, .login-box .form-group input:not(:placeholder-shown) + label {
-  background-color: #1f1f3a; color: var(--accent-color);
-}
-.form-group select ~ .static-label {
-    position: static; color: var(--primary-color); font-weight: 700; display: flex; align-items: center; margin-bottom: 8px; font-size: 1.1em;
-}
-
+.form-group input:focus + label, .form-group input:not(:placeholder-shown) + label { top: -10px; left: 10px; font-size: 0.8em; background-color: var(--card-background); padding: 0 5px; color: var(--primary-color); }
+.login-box .form-group input:focus + label, .login-box .form-group input:not(:placeholder-shown) + label { background-color: #1f1f3a; color: var(--accent-color); }
+.form-group select ~ .static-label { position: static; color: var(--primary-color); font-weight: 700; display: flex; align-items: center; margin-bottom: 8px; font-size: 1.1em; }
 label i { margin-right: 10px; width: 20px; text-align: center; }
 .form-row { display: flex; gap: 20px; }
 .form-row .form-group { flex: 1; }
-
-input:focus, select:focus {
-  outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 4px rgba(74, 144, 226, 0.2);
-}
-
-.login-box button, form button {
-  width: 100%; padding: 15px; margin-top: 15px; border: none; border-radius: 10px; cursor: pointer;
-  background: var(--accent-color);
-  color: white; font-size: 18px; font-weight: 700;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(255, 64, 129, 0.4);
-}
-.login-box button:hover, form button:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 25px rgba(255, 64, 129, 0.6);
-}
-
+input:focus, select:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 4px rgba(74, 144, 226, 0.2); }
+.login-box button, form button { width: 100%; padding: 15px; margin-top: 15px; border: none; border-radius: 10px; cursor: pointer; background: var(--accent-color); color: white; font-size: 18px; font-weight: 700; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(255, 64, 129, 0.4); }
+.login-box button:hover, form button:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(255, 64, 129, 0.6); }
 #map { height: 450px; border-radius: 20px; max-width: 900px; }
 table { width: 100%; border-collapse: collapse; overflow: hidden; }
 thead th { background-color: var(--primary-color); color: white; }

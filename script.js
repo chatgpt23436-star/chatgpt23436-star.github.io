@@ -2,17 +2,48 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // --- ELEMENTOS DEL DOM ---
   const mainApp = document.getElementById('main-app');
+  // Modales
   const loginModal = document.getElementById('login-modal');
+  const registerModal = document.getElementById('register-modal'); // Nuevo
   const videoModal = document.getElementById('video-modal');
   const welcomeMessageModal = document.getElementById('welcome-message-modal');
+  
+  // --- CONTROLES DEL LOGIN ---
   const loginButton = document.getElementById('login-button');
   const usernameInput = document.getElementById('username');
   const passwordInput = document.getElementById('password');
+  const showRegisterLink = document.getElementById('show-register-link'); // Nuevo
+
+  // --- CONTROLES DEL REGISTRO (NUEVOS) ---
+  const registerButton = document.getElementById('register-button');
+  const showLoginLink = document.getElementById('show-login-link');
+  const regPassword = document.getElementById('reg-password');
+  const regConfirmPassword = document.getElementById('reg-confirm-password');
+
+  // --- CONTROLES DE VIDEO Y MENSAJE ---
   const welcomeVideo = document.getElementById('welcome-video');
   const closeVideoButton = document.getElementById('close-video-button');
   const closeWelcomeButton = document.getElementById('close-welcome-button');
+
+  // --- LÓGICA DE NAVEGACIÓN ENTRE MODALES ---
+
+  // Muestra el modal de registro y oculta el de login
+  showRegisterLink.addEventListener('click', function(e) {
+    e.preventDefault();
+    loginModal.style.display = 'none';
+    registerModal.style.display = 'flex';
+  });
+
+  // Muestra el modal de login y oculta el de registro
+  showLoginLink.addEventListener('click', function(e) {
+    e.preventDefault();
+    registerModal.style.display = 'none';
+    loginModal.style.display = 'flex';
+  });
   
   // --- LÓGICA DE LA SECUENCIA DE BIENVENIDA ---
+
+  // Lógica del Login
   loginButton.addEventListener('click', function() {
     if (usernameInput.value.trim() !== '' && passwordInput.value.trim() !== '') {
       loginModal.style.display = 'none';
@@ -23,10 +54,30 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
+  // Lógica del Registro (Simulado)
+  registerButton.addEventListener('click', function() {
+    if(regPassword.value !== regConfirmPassword.value) {
+        alert('Las contraseñas no coinciden.');
+        return;
+    }
+    // Aquí iría una validación más completa de todos los campos
+    
+    // Mostramos un mensaje de éxito
+    alert('¡Registro exitoso! Ahora puedes iniciar sesión.');
+
+    // Ocultamos el modal de registro y mostramos el de login
+    registerModal.style.display = 'none';
+    loginModal.style.display = 'flex';
+  });
+
+  // Lógica para cerrar el video y mostrar la app
   closeVideoButton.addEventListener('click', function() {
     videoModal.style.display = 'none';
     welcomeVideo.pause();
     mainApp.style.display = 'block';
+    
+    document.body.classList.add('app-visible');
+    
     initializeApp();
     
     setTimeout(() => {
@@ -43,31 +94,24 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // --- FUNCIÓN QUE INICIALIZA TODA LA APP ---
+// ... (Esta función no necesita cambios) ...
 function initializeApp() {
-  // --- SECCIÓN DE INICIALIZACIÓN ---
   let map = L.map('map').setView([19.4326, -99.1332], 12);
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-  
   var swiper = new Swiper('.swiper-container', {
     slidesPerView: 1, spaceBetween: 30, loop: true,
     pagination: { el: '.swiper-pagination', clickable: true, },
     navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev', },
     breakpoints: { 768: { slidesPerView: 2, spaceBetween: 20 } }
   });
-
   let controlRuta;
   let coordsOrigen, coordsDestino;
   let costoTotal = 0;
-
-  // --- CORRECCIÓN: Conectamos los botones desde aquí ---
   const calculateButton = document.getElementById('calculate-button');
   const saveButton = document.getElementById('save-button');
-
   calculateButton.addEventListener('click', calcularRuta);
   saveButton.addEventListener('click', guardarViaje);
-  // --- FIN DE LA CORRECCIÓN ---
-
-  // --- SECCIÓN DE FUNCIONES DE LA APP ---
+  
   function buscarDireccion(inputId, sugerenciasId, callback){
     let input = document.getElementById(inputId);
     let lista = document.getElementById(sugerenciasId);
@@ -91,7 +135,6 @@ function initializeApp() {
         });
     });
   }
-
   function calcularRuta(){
     if(!coordsOrigen || !coordsDestino){ alert("Selecciona origen y destino"); return;}
     let tamano = document.getElementById("tamano").value;
@@ -108,7 +151,6 @@ function initializeApp() {
         `<h3>Resultado del viaje</h3><p>Distancia: ${distanciaKm.toFixed(2)} km</p><p>Costo por distancia: $${costoKm.toFixed(2)}</p><p>Costo adicional: $${extra}</p><h4>Total a pagar: $${costoTotal.toFixed(2)}</h4>`;
     }).addTo(map);
   }
-
   function guardarViaje(){
     if(costoTotal === 0){ alert("Primero calcula la ruta"); return;}
     let metodo_pago = document.getElementById("metodo_pago").value;
@@ -125,7 +167,6 @@ function initializeApp() {
       alert("Pago en efectivo confirmado ✅");
     }
   }
-
   function mostrarViajes(){
     let viajes = JSON.parse(localStorage.getItem("viajes")) || [];
     let tbody = document.querySelector("#tablaViajes tbody");
@@ -135,7 +176,6 @@ function initializeApp() {
       tbody.innerHTML += fila;
     });
   }
-
   function mostrarBotonPayPal(){
     document.getElementById("paypal-button-container").innerHTML = "";
     paypal.Buttons({
@@ -150,7 +190,6 @@ function initializeApp() {
     }).render('#paypal-button-container');
   }
   
-  // --- SECCIÓN DE LLAMADAS INICIALES ---
   buscarDireccion('origen','sugerenciasOrigen', coords => coordsOrigen = coords);
   buscarDireccion('destino','sugerenciasDestino', coords => coordsDestino = coords);
   mostrarViajes();
